@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "category".
@@ -11,7 +13,7 @@ use Yii;
  * @property string $name
  * @property int $parent_id
  */
-class Category extends \yii\db\ActiveRecord
+class Category extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -27,7 +29,7 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'parent_id'], 'required'],
+            [['name'], 'required'],
             [['parent_id'], 'default', 'value' => null],
             [['parent_id'], 'integer'],
             [['name'], 'string', 'max' => 255],
