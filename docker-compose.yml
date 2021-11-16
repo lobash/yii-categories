@@ -7,3 +7,22 @@ services:
       - ./:/app:delegated
     ports:
       - '8000:80'
+    env_file:
+      - .env
+
+  postgres:
+    container_name: postgres_container
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - ${POSTGRES_PORT}:5432
+    restart: unless-stopped
+
+volumes:
+  postgres:
