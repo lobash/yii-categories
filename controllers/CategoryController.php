@@ -78,6 +78,7 @@ class CategoryController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'parentList' => Category::getParentList()
         ]);
     }
 

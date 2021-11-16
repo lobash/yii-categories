@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
@@ -46,5 +45,22 @@ class Category extends ActiveRecord
             'name' => 'Name',
             'parent_id' => 'Parent ID',
         ];
+    }
+
+    /**
+     * get parent list for form
+     * format $arr = ['id' => 'name', ...]
+     * @return array
+     */
+    public static function getParentList()
+    {
+        return ArrayHelper::map(
+            Category::find()
+                ->select(['name', 'id'])
+                ->indexBy('id')
+                ->asArray()->all(),
+            'id',
+            'name'
+        );
     }
 }
