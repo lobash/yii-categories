@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use yii\base\Exception;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
@@ -44,6 +45,7 @@ class Category extends ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'parent_id' => 'Parent ID',
+            'level' => 'Level',
         ];
     }
 
@@ -62,5 +64,33 @@ class Category extends ActiveRecord
             'id',
             'name'
         );
+    }
+
+
+    /**
+     * @return int|mixed
+     * @throws Exception
+     */
+    public function calcLevel($parentId, $currentLevel = 0)
+    {
+        if ($parentId === null) {
+            return $currentLevel;
+        }
+
+        if ($currentLevel > \Yii::$app->params['max_level']) {
+            throw new Exception('category level critical deep');
+        }
+
+        $stepParentId = Category::find()
+            ->select('parent_id')
+            ->where(['id' => $parentId])
+            ->asArray()
+            ->scalar();
+
+        if ($stepParentId === false) {
+            throw new Exception('the category chain is broken. it is necessary to recalculate');
+        }
+
+        return $this->calcLevel($stepParentId, $currentLevel + 1);
     }
 }

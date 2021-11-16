@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Category;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -29,6 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             'parent_id',
+            [
+                'label' => 'level',
+                'value' => function(Category $model) {
+                    return $model->calcLevel($model->id);
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

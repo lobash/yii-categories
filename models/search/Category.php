@@ -46,6 +46,12 @@ class Category extends CategoryModel
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_ASC,
+                    'parent_id' => SORT_ASC,
+                ]
+            ]
         ]);
 
         $this->load($params);

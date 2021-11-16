@@ -8,5 +8,6 @@ return [
     // you need to ensure you load the Bootstrap CSS/JS manually in your view layout before Krajee CSS/JS assets
     //
     // other params settings below
-     'bsVersion' => '4.x',
+    'bsVersion' => '4.x',
+    'max_level' => 30
 ];
